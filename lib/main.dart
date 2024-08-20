@@ -1,5 +1,6 @@
 import 'package:countries/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/route_manager.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,12 +12,9 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Countries',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.black),
-        useMaterial3: true,
-      ),
+      theme: ThemeData(fontFamily: 'Inter'),
       home: const SplashScreen(),
     );
   }
