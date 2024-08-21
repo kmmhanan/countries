@@ -30,4 +30,11 @@ class MainController extends GetxController {
       // duration: transitionDuration,
     );
   }
+
+  String formatNumber(int number) {
+    return number.toString().replaceAllMapped(
+          RegExp(r'(\d)(?=(\d{3})+$)'),
+          (match) => '${match[1]},',
+        );
+  }
 }

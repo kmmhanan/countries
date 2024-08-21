@@ -6,6 +6,7 @@ class Solid {
   final Color main2 = const Color(0xFFFF9900);
   final Color dark = const Color(0xFF000000);
   final Color light = const Color(0xFFFFFFFF);
+  final Color light50 = const Color(0x80FFFFFF);
 
   const Solid();
 }

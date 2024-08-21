@@ -4,7 +4,6 @@ import 'package:countries/controllers/api/country_controller.dart';
 import 'package:countries/controllers/common/main_controller.dart';
 import 'package:countries/screens/country_details_screen.dart';
 import 'package:countries/screens/layouts/screen_layout.dart';
-import 'package:get/get_utils/get_utils.dart' as get_utils;
 
 // Extension to capitalize the first letter of a string
 extension StringCapitalization on String {
@@ -209,20 +208,20 @@ class _CountryListScreenState extends State<CountryListScreen> {
               final controller = Get.find<CountryController>();
 
               if (controller.isLoading.value) {
-                return Center(
+                return const Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const CircularProgressIndicator(),
-                      const SizedBox(height: 16),
-                      const Text('Loading...'),
+                      CircularProgressIndicator(),
+                      SizedBox(height: 16),
+                      Text('Loading...'),
                     ],
                   ),
                 );
               }
 
               if (controller.filteredCountries.isEmpty) {
-                return Center(child: const Text('No data available'));
+                return const Center(child: Text('No data available'));
               }
 
               return RefreshIndicator(
@@ -236,7 +235,7 @@ class _CountryListScreenState extends State<CountryListScreen> {
                     return ListTile(
                       leading: Image.network(country.flags.png),
                       title: Text(country.name.common),
-                      subtitle: Text('${country.capital.join(', ')}'),
+                      subtitle: Text(country.capital.join(', ')),
                       onTap: () {
                         Get.to(() => CountryDetailsScreen(country: country));
                       },
