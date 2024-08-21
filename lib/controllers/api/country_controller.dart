@@ -9,6 +9,7 @@ class CountryController extends GetxController {
   var countries = <Country>[].obs;
   var filteredCountries = <Country>[].obs;
   var isLoading = false.obs;
+  var selectedFilter = ''.obs;
   final ApiClient apiClient;
 
   int currentPage = 1;

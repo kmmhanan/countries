@@ -1,8 +1,9 @@
+import 'package:countries/screens/widgets/country_list.dart';
+import 'package:countries/screens/widgets/paginator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:countries/controllers/api/country_controller.dart';
 import 'package:countries/controllers/common/main_controller.dart';
-import 'package:countries/screens/country_details_screen.dart';
 import 'package:countries/screens/layouts/screen_layout.dart';
 
 // Extension to capitalize the first letter of a string
@@ -55,21 +56,6 @@ class _CountryListScreenState extends State<CountryListScreen> {
     super.dispose();
   }
 
-  Future<void> _refreshData() async {
-    try {
-      await cntry.fetchCountries(filter: _selectedFilter!);
-      _applyFiltersAndSorting();
-    } catch (e) {
-      Get.snackbar(
-        'Error',
-        'Failed to refresh data: $e',
-        snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
-    }
-  }
-
   void _applyFiltersAndSorting() {
     if (_selectedFilter != null && _selectedSort != null) {
       cntry.filterAndSort(
@@ -114,163 +100,111 @@ class _CountryListScreenState extends State<CountryListScreen> {
     return ScreenLayout(
       backButtonActive: false,
       appBarTitle: "Country List",
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: DropdownButton<String>(
-                    value: _selectedFilter,
-                    items: <String>[
-                      'name',
-                      'capital',
-                      'flags',
-                      'region',
-                      'languages',
-                      'population'
-                    ].map((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value.customCapitalizeFirst),
-                      );
-                    }).toList(),
-                    onChanged: _onFilterChanged,
-                    hint: const Text('Select filter'),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: DropdownButton<String>(
+                      value: _selectedFilter,
+                      items: <String>[
+                        'name',
+                        'capital',
+                        'flags',
+                        'region',
+                        'languages',
+                        'population'
+                      ].map((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value.customCapitalizeFirst),
+                        );
+                      }).toList(),
+                      onChanged: _onFilterChanged,
+                      hint: const Text('Select filter'),
+                    ),
                   ),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: DropdownButton<String>(
-                    value: _selectedSort,
-                    items: <String>[
-                      'ascending',
-                      'descending'
-                    ].map((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value.customCapitalizeFirst),
-                      );
-                    }).toList(),
-                    onChanged: _onSortChanged,
-                    hint: const Text('Select sort order'),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: DropdownButton<String>(
+                      value: _selectedSort,
+                      items: <String>[
+                        'ascending',
+                        'descending'
+                      ].map((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value.customCapitalizeFirst),
+                        );
+                      }).toList(),
+                      onChanged: _onSortChanged,
+                      hint: const Text('Select sort order'),
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: DropdownButton<String>(
-                    value: _itemsPerPage,
-                    items: <String>[
-                      '10',
-                      '15',
-                      '20'
-                    ].map((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text('$value items per page'),
-                      );
-                    }).toList(),
-                    onChanged: _onItemsPerPageChanged,
-                    hint: const Text('Items per page'),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              controller: _searchTermController,
-              decoration: InputDecoration(
-                labelText: 'Search',
-                border: const OutlineInputBorder(),
-                suffixIcon: _searchTermController.text.isNotEmpty
-                    ? IconButton(
-                        icon: const Icon(Icons.clear),
-                        onPressed: () {
-                          _searchTermController.clear();
-                          _applyFiltersAndSorting();
-                        },
-                      )
-                    : null,
+                ],
               ),
             ),
-          ),
-          Expanded(
-            child: Obx(() {
-              final controller = Get.find<CountryController>();
-
-              if (controller.isLoading.value) {
-                return const Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CircularProgressIndicator(),
-                      SizedBox(height: 16),
-                      Text('Loading...'),
-                    ],
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: DropdownButton<String>(
+                      value: _itemsPerPage,
+                      items: <String>[
+                        '10',
+                        '15',
+                        '20'
+                      ].map((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text('$value items per page'),
+                        );
+                      }).toList(),
+                      onChanged: _onItemsPerPageChanged,
+                      hint: const Text('Items per page'),
+                    ),
                   ),
-                );
-              }
-
-              if (controller.filteredCountries.isEmpty) {
-                return const Center(child: Text('No data available'));
-              }
-
-              return RefreshIndicator(
-                onRefresh: () async {
-                  await _refreshData();
-                },
-                child: ListView.builder(
-                  itemCount: controller.filteredCountries.length,
-                  itemBuilder: (context, index) {
-                    final country = controller.filteredCountries[index];
-                    return ListTile(
-                      leading: Image.network(country.flags.png),
-                      title: Text(country.name.common),
-                      subtitle: Text(country.capital.join(', ')),
-                      onTap: () {
-                        Get.to(() => CountryDetailsScreen(country: country));
-                      },
-                    );
-                  },
-                ),
-              );
-            }),
-          ),
-          if (!cntry.isLoading.value && cntry.countries.isEmpty) ...[
-            ElevatedButton(
-              onPressed: () {
-                cntry.fetchCountries(); // Retry fetching countries
-              },
-              child: const Text('Try Again'),
-            ),
-          ],
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  cntry.previousPage();
-                },
-                child: const Text('Previous'),
+                ],
               ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                controller: _searchTermController,
+                decoration: InputDecoration(
+                  labelText: 'Search',
+                  border: const OutlineInputBorder(),
+                  suffixIcon: _searchTermController.text.isNotEmpty
+                      ? IconButton(
+                          icon: const Icon(Icons.clear),
+                          onPressed: () {
+                            _searchTermController.clear();
+                            _applyFiltersAndSorting();
+                          },
+                        )
+                      : null,
+                ),
+              ),
+            ),
+            const CountryList(),
+            if (!cntry.isLoading.value && cntry.countries.isEmpty) ...[
               ElevatedButton(
                 onPressed: () {
-                  cntry.nextPage();
+                  cntry.fetchCountries(); // Retry fetching countries
                 },
-                child: const Text('Next'),
+                child: const Text('Try Again'),
               ),
             ],
-          ),
-        ],
+            const SizedBox(height: 8),
+            const Paginator(),
+            const SizedBox(height: 8)
+          ],
+        ),
       ),
     );
   }

@@ -1,7 +1,10 @@
 import 'package:countries/controllers/common/main_controller.dart';
 import 'package:countries/models/country_model.dart';
 import 'package:countries/screens/layouts/screen_layout.dart';
+import 'package:countries/screens/widgets/common_container.dart';
+import 'package:countries/screens/widgets/detail_bar.dart';
 import 'package:countries/theme/color_theme.dart';
+import 'package:countries/theme/text_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -56,49 +59,80 @@ class CountryDetailsScreen extends StatelessWidget {
                         ),
                 ),
                 const SizedBox(height: 16),
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(24),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16),
-                    color: AppColor.slid.light50,
-                  ),
-                  child: Text(
-                    'Unfortunatly ${country.name.common} flag not avilable.',
-                    textAlign: TextAlign.center,
-                  ),
+                CommonContainer(
+                  content: 'The official name of "${country.name.common}" is \n"${country.name.official}"',
+                  textStyle: Theme.of(context).textTheme.normal16.copyWith(
+                        color: AppColor.slid.dark,
+                      ),
                 ),
                 const SizedBox(height: 8),
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(24),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16),
-                    color: AppColor.slid.light50,
-                  ),
-                  child: Column(
-                    children: [
-                      Text(
-                        'Capital: ${country.capital.join(', ')}',
-                        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                Stack(
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.only(
+                        top: 80,
+                        bottom: 24,
+                        left: 8,
+                        right: 8,
                       ),
-                      const SizedBox(height: 8),
-                      Text(
-                        'Region: ${country.region}',
-                        style: const TextStyle(fontSize: 18),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        color: AppColor.slid.light50,
                       ),
-                      const SizedBox(height: 8),
-                      Text(
-                        'Population: ${main.formatNumber(country.population)}',
-                        style: const TextStyle(fontSize: 18),
+                      child: Column(
+                        children: [
+                          DetailBar(
+                            content: 'Capital: ${country.capital.join(', ')}',
+                            textStyle: Theme.of(context).textTheme.bold16.copyWith(
+                                  color: AppColor.slid.dark,
+                                ),
+                          ),
+                          const SizedBox(height: 8),
+                          DetailBar(
+                            content: 'Region: ${country.region}',
+                            textStyle: Theme.of(context).textTheme.normal16.copyWith(
+                                  color: AppColor.slid.dark,
+                                ),
+                          ),
+                          const SizedBox(height: 8),
+                          DetailBar(
+                            content: 'Population: ${main.formatNumber(country.population)}',
+                            textStyle: Theme.of(context).textTheme.normal16.copyWith(
+                                  color: AppColor.slid.dark,
+                                ),
+                          ),
+                          const SizedBox(height: 8),
+                          DetailBar(
+                            content: 'Languages: ${country.languages.toJson().values.join(', ')}',
+                            textStyle: Theme.of(context).textTheme.normal16.copyWith(
+                                  color: AppColor.slid.dark,
+                                ),
+                          ),
+                        ],
                       ),
-                      const SizedBox(height: 8),
-                      Text(
-                        'Languages: ${country.languages.toJson().values.join(', ')}',
-                        style: const TextStyle(fontSize: 18),
+                    ),
+                    Positioned(
+                        child: Container(
+                      height: 56,
+                      alignment: Alignment.center,
+                      width: double.infinity,
+                      margin: const EdgeInsets.symmetric(horizontal: 16),
+                      decoration: BoxDecoration(
+                        color: AppColor.slid.dark50,
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(4),
+                          topRight: Radius.circular(4),
+                          bottomRight: Radius.circular(16),
+                          bottomLeft: Radius.circular(16),
+                        ),
                       ),
-                    ],
-                  ),
+                      child: Text(
+                        "More details",
+                        style: Theme.of(context).textTheme.bold18,
+                      ),
+                    ))
+                  ],
                 ),
               ],
             ),
