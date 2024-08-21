@@ -1,5 +1,5 @@
 import 'package:countries/controllers/common/main_controller.dart';
-import 'package:countries/screens/home_screen.dart';
+import 'package:countries/screens/country_list_screen.dart';
 import 'package:countries/screens/layouts/screen_layout.dart';
 import 'package:countries/theme/text_theme.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +23,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void _navigatetohome() async {
     await Future.delayed(const Duration(milliseconds: 1500));
-    main.navTo(const HomeScreen());
+    main.nameNavTo('/country_list');
   }
 
   @override

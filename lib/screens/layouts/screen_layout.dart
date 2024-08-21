@@ -1,11 +1,10 @@
 import 'package:countries/theme/color_theme.dart';
 import 'package:countries/theme/text_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:get/route_manager.dart';
 
 class ScreenLayout extends StatelessWidget {
-  ScreenLayout({
+  const ScreenLayout({
     this.appBarTitle,
     this.onBackPressed,
     this.backButtonActive = true,
@@ -16,7 +15,7 @@ class ScreenLayout extends StatelessWidget {
   final String? appBarTitle;
   final Widget child;
   final bool? backButtonActive;
-  void Function()? onBackPressed;
+  final void Function()? onBackPressed;
 
   @override
   Widget build(BuildContext context) {
