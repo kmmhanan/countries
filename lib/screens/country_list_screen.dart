@@ -1,5 +1,6 @@
 import 'package:countries/screens/widgets/country_list.dart';
 import 'package:countries/screens/widgets/paginator.dart';
+import 'package:countries/theme/color_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:countries/controllers/api/country_controller.dart';
@@ -172,8 +173,11 @@ class _CountryListScreenState extends State<CountryListScreen> {
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
+            Container(
+              decoration: BoxDecoration(
+                color: AppColor.slid.dark50,
+              ),
+              // padding: const EdgeInsets.all(8.0),
               child: TextField(
                 controller: _searchTermController,
                 decoration: InputDecoration(

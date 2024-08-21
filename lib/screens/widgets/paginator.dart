@@ -77,11 +77,18 @@ class Paginator extends StatelessWidget {
         Positioned(
             top: -16,
             child: Container(
+              alignment: Alignment.center,
               width: 72,
               height: 72,
               decoration: BoxDecoration(
                 color: AppColor.slid.light,
                 borderRadius: BorderRadius.circular(16),
+              ),
+              child: Text(
+                '15',
+                style: Theme.of(context).textTheme.normal18.copyWith(
+                      color: AppColor.slid.dark,
+                    ),
               ),
             ))
       ],
