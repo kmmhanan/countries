@@ -19,20 +19,9 @@ class Muliple {
       AppColor.slid.main1,
       AppColor.slid.main2.withOpacity(0.5),
     ],
-    // stops: const [0.3, 1.0],
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
   );
-
-  // final Gradient bg = RadialGradient(
-  //   colors: [
-  //     AppColor.slid.main1,
-  //     AppColor.slid.main2.withOpacity(0),
-  //   ],
-  //   // stops: const [0.3, 1.0],
-  //   center: Alignment.center,
-  //   radius: 0.5,
-  // );
 
   Muliple();
 }

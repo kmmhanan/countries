@@ -15,19 +15,13 @@ class MainController extends GetxController {
 
   void nameNavTo(String goTo) {
     Get.toNamed(
-      // () => goTo,
       goTo,
-      // transition: transitionType,
-      // duration: transitionDuration,
     );
   }
 
   void spNavTo(String goTo) {
     Get.offAllNamed(
-      // () => goTo,
       goTo,
-      // transition: transitionType,
-      // duration: transitionDuration,
     );
   }
 
