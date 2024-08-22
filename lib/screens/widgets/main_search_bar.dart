@@ -23,6 +23,7 @@ class MainSearchBar extends StatelessWidget {
       child: TextField(
         textAlign: TextAlign.center,
         controller: controller,
+        style: Theme.of(context).textTheme.bold16,
         decoration: InputDecoration(
           fillColor: AppColor.slid.light,
           hintText: "Search",

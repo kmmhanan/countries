@@ -131,6 +131,7 @@ class CountryController extends GetxController {
           case 'region':
             return country.region.toLowerCase().contains(searchTerm.toLowerCase());
           case 'languages':
+            // Correctly access the values in the Languages model
             return country.languages.values.values.any((language) => language.toLowerCase().contains(searchTerm.toLowerCase()));
           case 'population':
             return country.population.toString().contains(searchTerm);
@@ -166,9 +167,13 @@ class CountryController extends GetxController {
       return (sort == 'ascending') ? comparison : -comparison;
     });
 
-    // Apply pagination
-    final startIndex = (page ?? currentPage.value - 1) * itemsPerPage.value;
-    final endIndex = startIndex + itemsPerPage.value;
+    // Ensure the pagination is correct
+    final itemsPerPageValue = itemsPerPage.value;
+    final currentPageValue = page ?? currentPage.value;
+    final startIndex = (currentPageValue - 1) * itemsPerPageValue;
+    final endIndex = startIndex + itemsPerPageValue;
+
+    // Adjust pagination boundaries to prevent skipping records
     final paginatedFiltered = filtered.sublist(
       startIndex,
       endIndex > filtered.length ? filtered.length : endIndex,
