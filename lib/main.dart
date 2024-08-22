@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 void main() {
   final dio = Dio();
   final apiClient = ApiClient(dio);
+  Get.put(TextEditingController());
   Get.put(CountryController(apiClient));
 
   runApp(const MyApp());

@@ -1,5 +1,4 @@
 import 'package:countries/controllers/common/main_controller.dart';
-import 'package:countries/screens/country_list_screen.dart';
 import 'package:countries/screens/layouts/screen_layout.dart';
 import 'package:countries/theme/text_theme.dart';
 import 'package:flutter/material.dart';
@@ -41,15 +40,6 @@ class _SplashScreenState extends State<SplashScreen> {
               style: TextStyle(color: Colors.transparent),
             ),
             const Spacer(),
-            // ClipRRect(
-            //   borderRadius: BorderRadius.circular(18),
-            //   child: Image.network(
-            //     "https://flagcdn.com/w320/no.png",
-            //     height: 100,
-            //     width: 100,
-            //     fit: BoxFit.cover,
-            //   ),
-            // ),
             Image.asset(
               "assets/images/app-icon.png",
               height: 100,

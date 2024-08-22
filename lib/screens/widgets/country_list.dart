@@ -41,7 +41,20 @@ class _CountryListState extends State<CountryList> {
         }
 
         if (controller.filteredCountries.isEmpty) {
-          return const Center(child: Text('No data available'));
+          return const Center(
+            child: Text('No data available'),
+          );
+        }
+
+        if (!cntry.isLoading.value && cntry.countries.isEmpty) {
+          return Center(
+            child: ElevatedButton(
+              onPressed: () {
+                cntry.fetchCountries();
+              },
+              child: const Text('Try Again'),
+            ),
+          );
         }
 
         return RefreshIndicator(
